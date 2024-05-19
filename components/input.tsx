@@ -23,6 +23,7 @@ const Input: React.FC<InputProps> = ({
             type={type}
             onChange={onChange}
             id={id}
+            required
             className="
                 block
                 rounded-md 

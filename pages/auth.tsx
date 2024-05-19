@@ -1,12 +1,14 @@
 import Input from "@/components/input";
 import { useCallback, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import baseUrl from "@/Utils";
+import { useRouter } from "next/router";
 const Auth = () => {
-
+    const router = useRouter();
     const [email, setEmail] = useState("");
-    const [userName, setUserName] = useState("");
+    const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const [variant, setVariant] = useState("login");
 
@@ -14,18 +16,23 @@ const Auth = () => {
         setVariant((currentVariant)=> currentVariant=== "login"? "register" : "login");
     }, [])
 
-    const register = useCallback(async()=>{
+    const auth = useCallback(async()=>{
+        setErrorMessage("");
         try {
             const res = await axios.post(`${baseUrl}/auth/${variant}`, {
                 email,
-                userName,
+                username,
                 password
             });
+            setEmail(""); setUserName(""); setPassword("");
             console.log(res.data);
-        } catch (error) {
-            console.log(error)
+            router.push("/");
+        } catch (error:unknown) {
+            if(error instanceof AxiosError){
+                error.response? setErrorMessage(error.response.data.message) : console.error(error);
+            }
         }
-    }, [email, userName, password, variant])
+    }, [email, username, password, variant, router])
     
     return(
         
@@ -48,7 +55,7 @@ const Auth = () => {
             onChange={(event: any)=>setUserName(event.target.value)}
             id="name"
             type="text"
-            value={userName}
+            value={username}
             />
         )}
             <Input
@@ -66,9 +73,15 @@ const Auth = () => {
             value={password}
             />
             </div>
-            <button onClick={register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+            <button onClick={auth} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
                 {variant==="login"? "Login" : "Register"}
             </button>
+            {errorMessage.length > 1 && (
+            <p className="text-red-600 mt-4 justify-center">
+                {errorMessage}
+            </p>
+            )
+            }
             <p className="text-neutral-500 mt-12 lg:mt-10">
             {variant==="login"? "First time using Netflix?":"Already have an account?"}
                 <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
