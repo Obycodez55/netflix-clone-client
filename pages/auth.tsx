@@ -19,13 +19,13 @@ const Auth = () => {
     const auth = useCallback(async()=>{
         setErrorMessage("");
         try {
-            const res = await axios.post(`${baseUrl}/auth/${variant}`, {
+            const {data} = await axios.post(`${baseUrl}/auth/${variant}`, {
                 email,
                 username,
                 password
             });
             setEmail(""); setUserName(""); setPassword("");
-            console.log(res.data);
+            console.log(data);
             router.push("/");
         } catch (error:unknown) {
             if(error instanceof AxiosError){
