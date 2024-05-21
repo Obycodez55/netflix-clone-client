@@ -27,7 +27,7 @@ const AddNewProfile: React.FC<ProfileProps> = ({})=>{
     </div>
 
     <div className="mt-4 text-gray-400 text-xl text-center group-hover:text-white">
-Add New +
+Add New 
     </div>
 
 </div>

@@ -8,7 +8,7 @@ import AddNewProfile from "@/components/AddNewProfile";
 
 export async function getServerSideProps(context: NextPageContext) {
     const req  = context.req as IncomingMessage;
-    const token = req.headers.cookie? parse(req.headers.cookie) : undefined;
+    const token = req.headers.cookie? parse(req.headers.cookie).token : undefined;
     if(!token) return {
           redirect: {
             destination: "/auth",
@@ -49,12 +49,8 @@ const Profiles = () =>{
           />
         );
       })}
-      <Profile
-            id="kids"
-            name="Kids"
-            color="kids"
-          />
-          {profiles?.length <=4 && <AddNewProfile/>}
+    
+          {profiles?.length <=5 && <AddNewProfile/>}
         </div>
            </div>
         </div>

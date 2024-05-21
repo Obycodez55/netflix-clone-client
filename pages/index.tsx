@@ -10,7 +10,6 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 export async function getServerSideProps(context: NextPageContext) {
   const req  = context.req as IncomingMessage;
   const token = req.headers.cookie? parse(req.headers.cookie).token : undefined;
-  console.log(token);
   if(!token) return {
         redirect: {
           destination: "/auth",

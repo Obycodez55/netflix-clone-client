@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useCallback } from "react";
 
 interface ProfileProps{
     key?: number,
@@ -12,10 +14,24 @@ const Profile: React.FC<ProfileProps> = ({
     id,
    name,
    color
-})=>{
+}
+    )=>{
+        const router = useRouter();
+        const setProfile = useCallback(async()=>{
+            try {
+                await axios.post(`api/setProfile`, {
+                   id
+                });
+                
+                router.push("/");
+            } catch (error:unknown) {
+                console.log(error);
+            }
+        }, [id, router])
+
     const img = `/images/profiles/${color}.png`
     return(
-        <div onClick={()=> {}} id={id}>
+        <div onClick={setProfile}>
 
         <div className="group flex-row w-44 mx-auto">
 

@@ -5,9 +5,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(request: NextApiRequest, response: NextApiResponse){
     if (request.method !== "POST") return response.status(405).end();
 
-    const {name} = request.body;
+    const {id} = request.body;
 
-    const serialized = serialize("profile", name, {
+    const serialized = serialize("profile", id, {
         httpOnly: true,
         sameSite: "strict",
         maxAge: 60 * 60 * 24 * 1, //5 days

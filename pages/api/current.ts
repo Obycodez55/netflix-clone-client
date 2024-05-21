@@ -15,7 +15,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
        return response.status(200).send(data);
     } catch (error) {
         console.log(error);
-        return response.status(405).end();
+        return response.status(500).end();
     }
    
 }
