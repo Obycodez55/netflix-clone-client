@@ -2,6 +2,8 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
+import Profile from '../components/profile';
+import { ProfileA, User } from "..";
 
 export async function getServerSideProps(context: NextPageContext) {
     const req  = context.req as IncomingMessage;
@@ -21,12 +23,27 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const Profiles = () =>{
 
-    const {data: user} = useCurrentUser();
-    console.log(user?.profiles);
-
+    const {data} = useCurrentUser();
+    const user = data as User;
+  const profiles = user?.profiles;
     return (
-        <div>
-            <p className="text-white text-4xl">Profiles</p>
+        <div className="flex items-center h-full justify-center">
+           <div className="flex flex-col">
+        <h1 className="text-3xl md:text-6xl text-white text-center">Who is watching?</h1>
+        <div className="flex items-center justify-center gap-8 mt-10">
+           
+           {profiles?.map((profile : ProfileA, index) => {
+        return (
+          <Profile
+            key={index}
+            id={profile.id}
+            name={profile.name}
+            color={profile.profilePic}
+          />
+        );
+      })}
+        </div>
+           </div>
         </div>
     )
 }
