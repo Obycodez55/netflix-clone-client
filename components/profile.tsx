@@ -21,8 +21,10 @@ const Profile: React.FC<ProfileProps> = ({
 
             <div 
             className="
-            w-44
-            h-44
+            w-36
+            h-36
+            md:w-44
+            md:h-44
             rounded-md
             flex
             items-center
