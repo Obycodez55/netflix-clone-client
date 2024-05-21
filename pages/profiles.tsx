@@ -4,6 +4,7 @@ import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
 import Profile from '../components/profile';
 import { ProfileA, User } from "..";
+import AddNewProfile from "@/components/AddNewProfile";
 
 export async function getServerSideProps(context: NextPageContext) {
     const req  = context.req as IncomingMessage;
@@ -42,6 +43,12 @@ const Profiles = () =>{
           />
         );
       })}
+      <Profile
+            id="kids"
+            name="Kids"
+            color="kids"
+          />
+      <AddNewProfile/>
         </div>
            </div>
         </div>
