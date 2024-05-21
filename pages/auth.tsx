@@ -3,34 +3,41 @@ import { useCallback, useState } from "react";
 import axios, { AxiosError } from "axios";
 import baseUrl from "@/Utils";
 import { useRouter } from "next/router";
+
 const Auth = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [buttonText, setButtontext] = useState("Sign in")
     const [errorMessage, setErrorMessage] = useState("");
 
     const [variant, setVariant] = useState("login");
 
     const toggleVariant = useCallback(()=>{
         setVariant((currentVariant)=> currentVariant=== "login"? "register" : "login");
-    }, [])
+        setButtontext(variant === "login"? "Register" : "Sign in");
+    }, [variant])
 
     const auth = useCallback(async()=>{
         setErrorMessage("");
         try {
+            setButtontext("Loading...")
             const {data} = await axios.post(`${baseUrl}/auth/${variant}`, {
                 email,
                 username,
                 password
             });
-            setEmail(""); setUserName(""); setPassword("");
-            console.log(data);
+            setEmail(""); setUserName(""); setPassword(""); 
+            const res = await axios.post("api/setCookie", data);
+            
+            console.log(res);
             router.push("/");
         } catch (error:unknown) {
             if(error instanceof AxiosError){
-                error.response? setErrorMessage(error.response.data.message) : console.error(error);
+                error.status !== 500 && error.response ? setErrorMessage(error.response.data.message) : setErrorMessage("Internal Server Error! Try again");
             }
+            setButtontext(variant === "login"? "Sign in" : "Register");
         }
     }, [email, username, password, variant, router])
     
@@ -74,9 +81,9 @@ const Auth = () => {
             />
             </div>
             <button onClick={auth} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
-                {variant==="login"? "Login" : "Register"}
+                {buttonText}
             </button>
-            {errorMessage.length > 1 && (
+            {errorMessage && (
             <p className="text-red-600 mt-4 justify-center">
                 {errorMessage}
             </p>
