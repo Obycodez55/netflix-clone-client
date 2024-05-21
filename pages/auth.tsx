@@ -29,7 +29,7 @@ const Auth = () => {
                 password
             });
             setEmail(""); setUserName(""); setPassword(""); 
-            const res = await axios.post("api/setCookie", data);
+            const res = await axios.post("api/setToken", data);
             
             console.log(res);
             router.push("/profiles");

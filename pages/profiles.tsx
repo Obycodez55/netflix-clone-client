@@ -1,3 +1,4 @@
+import useCurrentUser from "@/hooks/useCurrentUser";
 import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
@@ -19,6 +20,10 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
 const Profiles = () =>{
+
+    const {data: user} = useCurrentUser();
+    console.log(user?.profiles);
+
     return (
         <div>
             <p className="text-white text-4xl">Profiles</p>
