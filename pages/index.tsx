@@ -5,6 +5,8 @@ import { NextPageContext } from "next";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 export async function getServerSideProps(context: NextPageContext) {
   const req  = context.req as IncomingMessage;
   const token = req.headers.cookie? parse(req.headers.cookie) : undefined;
@@ -22,6 +24,7 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function Home() {
+  const { data: user} = useCurrentUser();
   const {push} = useRouter();
   const logout = useCallback(async()=>{
     try {
@@ -31,16 +34,10 @@ export default function Home() {
       console.log(error);
 }}, [push])
 
-const getToken = useCallback(async()=>{
-  try {
-  const {data} = await axios.get(`api/current`);
-  console.log(data? data: "NO data");
-} catch (error:unknown) {
-    console.log(error);
-}}, [])
   return (
     <>
     <h1 className="text-4xl text-green-500">Netflix clone</h1>
+    <p className="text-white">Logged In as : {user?.username}</p>
     <button className="h-10 w-full bg-white hover:bg-neutral-400" onClick={logout}>
       Logout!
     </button>
