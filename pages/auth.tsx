@@ -45,6 +45,7 @@ const Auth = () => {
            
          <div className="bg-black w-full h-full lg:bg-opacity-50">
             <nav className="px-12 py-5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/images/logo.svg" alt="Logo" className="h-12" />
 
             </nav>

@@ -31,6 +31,7 @@ const Profiles = () =>{
       
       <>
       <nav className="px-12 py-5 max-md:flex max-md:items-center max-md:justify-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/images/logo.svg" alt="Logo" className="h-12 max-md:h-8" />
 
             </nav>
