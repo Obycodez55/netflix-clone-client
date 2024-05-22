@@ -29,10 +29,8 @@ const Auth = () => {
                 password
             });
             setEmail(""); setUserName(""); setPassword(""); 
-            const res = await axios.post("api/setCookie", data);
-            
-            console.log(res);
-            router.push("/");
+            await axios.post("api/setToken", data);
+            router.push("/profiles");
         } catch (error:unknown) {
             if(error instanceof AxiosError){
                 error.status !== 500 && error.response ? setErrorMessage(error.response.data.message) : setErrorMessage("Internal Server Error! Try again");
