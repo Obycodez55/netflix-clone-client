@@ -50,7 +50,7 @@ const Profiles = () =>{
         );
       })}
     
-          {profiles?.length <=5 && <AddNewProfile/>}
+          {profiles?.length <5 && <AddNewProfile/>}
         </div>
            </div>
         </div>

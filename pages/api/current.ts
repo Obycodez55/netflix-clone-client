@@ -11,7 +11,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        })
+        });
        return response.status(200).send(data);
     } catch (error) {
         console.log(error);

@@ -1,7 +1,7 @@
 export interface ProfileA {
     id: string
     name: string
-    profilePic: "red" | "blue" | "yellow" | "green" | "darkblue";
+    profilePic: "red" | "blue" | "yellow" | "green" | "darkblue"| "kids";
     createdAt?: Date | string
     updatedAt?: Date | string
     favouriteIds?: string[]

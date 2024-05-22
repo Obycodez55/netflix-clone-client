@@ -1,11 +1,13 @@
 import { serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
-
+import {sign} from "jsonwebtoken";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse){
     if (request.method !== "POST") return response.status(405).end();
 
-    const {id} = request.body;
+    // const {id} = request.body;
+    const secret = process.env.JWT_SECRET as string;
+    const id = sign(request.body.id, secret);
 
     const serialized = serialize("profile", id, {
         httpOnly: true,

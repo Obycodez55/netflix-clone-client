@@ -8,7 +8,7 @@ interface ProfileProps{
 
 const AddNewProfile: React.FC<ProfileProps> = ({})=>{
     return(
-        <div onClick={()=> {}}>
+        <a href="/profiles/create">
 
 <div className="group flex-row w-44 mx-auto">
 
@@ -32,7 +32,7 @@ Add New
 
 </div>
 
-    </div>
+    </a>
     )
 }
 

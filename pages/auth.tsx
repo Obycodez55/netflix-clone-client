@@ -29,9 +29,7 @@ const Auth = () => {
                 password
             });
             setEmail(""); setUserName(""); setPassword(""); 
-            const res = await axios.post("api/setToken", data);
-            
-            console.log(res);
+            await axios.post("api/setToken", data);
             router.push("/profiles");
         } catch (error:unknown) {
             if(error instanceof AxiosError){
