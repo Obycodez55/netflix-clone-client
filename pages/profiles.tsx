@@ -30,11 +30,7 @@ const Profiles = () =>{
     return (
       
       <>
-      <nav className="px-12 py-5 max-md:flex max-md:items-center max-md:justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/logo.svg" alt="Logo" className="h-12 max-md:h-8" />
-
-            </nav>
+      
         <div className="flex items-center h-full justify-center">
            <div className="flex flex-col">
         <h1 className="text-3xl md:text-6xl text-white text-center">Who is watching?</h1>
