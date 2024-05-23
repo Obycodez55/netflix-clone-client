@@ -1,8 +1,10 @@
 import React, { useCallback } from "react";
 import NavProfile from "./NavProfile";
+import AddNewProfile from "./AddNewProfile";
 import { ProfileA } from "..";
 import { useRouter } from "next/router";
 import axios from "axios";
+
 
 interface AccountMenuProps{
     visible? : boolean
@@ -31,6 +33,10 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
                 {profiles.map((profile, index)=>{
                     return <NavProfile key={index} id={profile.id} profilePic={profile.profilePic} name={profile.name}/>
                 })}
+
+                {profiles?.length <4 && <AddNewProfile small/>}
+
+                
                 <hr className="bg-gray-600 border-0 h-px my-4"/>
                 <div onClick={logout} className="px-3 text-center text-white text-sm hover:underline">
                     Sign out of Netflix

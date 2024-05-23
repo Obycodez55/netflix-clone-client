@@ -28,7 +28,7 @@ const NavProfile: React.FC<NavProfileProps> = ({
 
     return (
         <div onClick={changeProfile} className="px-3 group/item flex flow-row gap-3 items-center w-full">
-                    <img src={`/images/profiles/${profilePic}.png` }alt={name}className="w-8 rounded-md"/>
+                    <img src={`/images/profiles/${profilePic}.png`} alt={name} className="w-8 rounded-md"/>
                     <p className="text-white text-sm group-hover/item:underline">
                         {name}
                     </p>
