@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useCallback } from "react";
+import NavProfile from "./NavProfile";
+import { ProfileA } from "..";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 interface AccountMenuProps{
     visible? : boolean
+    profiles: ProfileA[]
 }
 
-const AccountMenu: React.FC<AccountMenuProps> = ({visible})=>{
+const AccountMenu: React.FC<AccountMenuProps> = ({
+    visible,
+    profiles
+})=>{
+
+    const {push} = useRouter();
+    const logout = useCallback(async()=>{
+        try {
+        await axios.delete(`api/deleteToken`);
+        await axios.delete(`api/deleteProfile`);
+        push("/auth");
+    } catch (error:unknown) {
+        console.log(error);
+  }}, [push])
+
     if(!visible) return null;
     return (
         <div className="bg-black w-56 absolute top-14 right-0 py-5 flex-col flex border-2 border-gray-800">
             <div className="flex flex-col gap-3">
-                <div className="px-3 group/item flex flow-row gap-3 items-center w-full">
-                    <img src="/images/profiles/blue.png" alt="" className="w-8 rounded-md"/>
-                    <p className="text-white text-sm group-hover/item:underline">
-                        Username
-                    </p>
-                </div>
+                {profiles.map((profile, index)=>{
+                    return <NavProfile key={index} id={profile.id} profilePic={profile.profilePic} name={profile.name}/>
+                })}
                 <hr className="bg-gray-600 border-0 h-px my-4"/>
-                <div onClick={()=> {}} className="px-3 text-center text-white text-sm hover:underline">
+                <div onClick={logout} className="px-3 text-center text-white text-sm hover:underline">
                     Sign out of Netflix
                 </div>
             </div>

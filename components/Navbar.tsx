@@ -5,10 +5,19 @@ import { MdArrowDropDown } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import AccountMenu from "./AccountMenu";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentProfile from "@/hooks/useCurrentProfile";
 
 const TOP_OFFSET = 66;
 
 const Navbar = () => {
+    const {user} = useCurrentUser();
+    const profiles = user?.profiles;
+    const {profile: currentProfile} = useCurrentProfile();
+
+    const otherProfiles = profiles?.filter((profile)=>{
+        return profile.id != currentProfile?.id;
+    });
 
     const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
     const [accountMenuVisible, setAccountMenuVisible] = useState(false);
@@ -85,11 +94,11 @@ const Navbar = () => {
                     <FaRegBell className="h-5 w-5"/>
                     </div>
                     <div onClick={toggleAccountMenu} className="flex flex-row items-center gap-2 cursor-pointer relative">
-                    <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
-                        <img src="/images/profiles/blue.png" alt=""/>
+                    <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-md overflow-hidden">
+                        <img src={`/images/profiles/${currentProfile?.profilePic}.png`} alt={currentProfile?.name}/>
                     </div>
                         <MdArrowDropDown className={`text-white transition w-6 h-6 ${accountMenuVisible? 'rotate-180' : "rotate-0"}`}/>
-                        <AccountMenu visible={accountMenuVisible}/>
+                        <AccountMenu visible={accountMenuVisible} profiles={otherProfiles}/>
                     </div>
                 </div>
             </div>

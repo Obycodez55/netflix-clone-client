@@ -24,8 +24,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const Profiles = () =>{
 
-    const {data} = useCurrentUser();
-    const user = data as User;
+    const {user} = useCurrentUser();
   const profiles = user?.profiles;
     return (
       
