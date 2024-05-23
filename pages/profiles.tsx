@@ -2,7 +2,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
-import Profile from '../components/profile';
+import Profile from '../components/Profile';
 import { ProfileA, User } from "..";
 import AddNewProfile from "@/components/AddNewProfile";
 

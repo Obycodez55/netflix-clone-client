@@ -1,4 +1,4 @@
-import Input from "@/components/input";
+import Input from "@/components/Input";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { User } from "@/index";
 import baseUrl from "@/Utils";
