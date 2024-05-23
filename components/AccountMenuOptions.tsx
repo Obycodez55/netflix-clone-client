@@ -2,7 +2,7 @@ import { TiPencil } from "react-icons/ti";
 
 const AccountMenuOptions = ()=>{
     return (
-        <div>
+        <div className="flex flex-col gap-3">
             <div className="px-3 group/item flex flow-row gap-3 items-center w-full">
                 <TiPencil className="text-white w-7 h-7"/>
                     <p className="text-white text-sm group-hover/item:underline">

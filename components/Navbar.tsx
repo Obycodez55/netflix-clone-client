@@ -25,17 +25,17 @@ const Navbar = () => {
 
 
     useEffect(() =>{
-        const handleScoll = () =>{
+        const handleScroll = () =>{
             if(window.scrollY >= TOP_OFFSET){
                 setShowBackground(true);
             }else{
                 setShowBackground(false);
             }
         }
-        window.addEventListener("scroll", handleScoll);
+        window.addEventListener("scroll", handleScroll);
 
         return () =>{
-            window.removeEventListener("scroll", handleScoll);
+            window.removeEventListener("scroll", handleScroll);
         }
     }, [])
 
@@ -43,9 +43,9 @@ const Navbar = () => {
         setMobileMenuVisible((current)=> !current);
     }, []);
     const toggleAccountMenu = useCallback(() => {
-        setAccountMenuVisible((current)=> !current);
+    setAccountMenuVisible((current)=> !current);
     }, []);
-
+    
     return (
         <nav className="w-full fixed z-40">
             <div 
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <NavbarItem  label="My List"/>
                 <NavbarItem  label="Browse by Languages"/>
             </div>
-            <div onClick={toggleMobileMenu} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
+            <div onClick={toggleMobileMenu} onMouseEnter={()=>setMobileMenuVisible(true)} onMouseLeave={() =>setMobileMenuVisible(false)} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
                 <p className="text-white text-sm">Browse</p>
                 <MdArrowDropDown className={`text-white transition w-6 h-6 ${mobileMenuVisible? 'rotate-180' : "rotate-0"}`}/>
 
@@ -93,7 +93,7 @@ const Navbar = () => {
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
                     <FaRegBell className="h-5 w-5"/>
                     </div>
-                    <div onClick={toggleAccountMenu} className="flex flex-row items-center gap-2 cursor-pointer relative">
+                    <div onClick={toggleAccountMenu} onMouseEnter={()=>setAccountMenuVisible(true)} onMouseLeave={() =>setAccountMenuVisible(false)} className="flex flex-row items-center gap-2 cursor-pointer relative">
                     <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-md overflow-hidden">
                         <img src={`/images/profiles/${currentProfile?.profilePic}.png`} alt={currentProfile?.name}/>
                     </div>
