@@ -6,8 +6,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if (request.method !== "POST") return response.status(405).end();
 
     // const {id} = request.body;
-    const secret = process.env.JWT_SECRET as string;
-    const id = sign(request.body.id, secret);
+    const id = sign(request.body.id, process.env.JWT_SECRET!);
 
     const serialized = serialize("profile", id, {
         httpOnly: true,

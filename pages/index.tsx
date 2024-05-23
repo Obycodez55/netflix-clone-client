@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
+import Navbar from "@/components/Navbar";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req  = context.req as IncomingMessage;
@@ -34,7 +35,7 @@ export default function Home() {
 
   return (
     <>
-   
+   <Navbar/>
     </>
   );
 }

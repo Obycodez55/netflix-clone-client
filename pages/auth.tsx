@@ -1,4 +1,4 @@
-import Input from "@/components/input";
+import Input from "@/components/Input";
 import { useCallback, useState } from "react";
 import axios, { AxiosError } from "axios";
 import baseUrl from "@/Utils";
