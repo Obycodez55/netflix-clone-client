@@ -1,8 +1,8 @@
 import fetcher from "@/lib/fetcher"
 import useSWR from "swr"
 
-const useCurrentUser = (endpoint? : string) => {
-    const url = endpoint || "api/currentUser";
+const useCurrentProfile= (endpoint? : string) => {
+    const url = endpoint || "api/currentProfile";
     const {data, error, isLoading, mutate} = useSWR(url, fetcher);
 
     return {
@@ -13,4 +13,4 @@ const useCurrentUser = (endpoint? : string) => {
     }
 }
 
-export default useCurrentUser;
+export default useCurrentProfile;

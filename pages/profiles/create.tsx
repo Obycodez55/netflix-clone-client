@@ -27,7 +27,7 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
 const CreateProfile = ({token}: {token: string}) =>{
-    const {data} = useCurrentUser("../api/current");
+    const {data} = useCurrentUser("../api/currentUser");
     const user = data as User;
   const profiles = user?.profiles;
 
