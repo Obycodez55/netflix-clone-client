@@ -30,15 +30,12 @@ const Profiles = () =>{
     return (
       
       <>
-      <nav className="px-12 py-5 max-md:flex max-md:items-center max-md:justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/logo.svg" alt="Logo" className="h-12 max-md:h-8" />
-
-            </nav>
+      
         <div className="flex items-center h-full justify-center">
            <div className="flex flex-col">
-        <h1 className="text-3xl md:text-6xl text-white text-center">Who is watching?</h1>
-        <div className="lg:flex grid md:grid-cols-3 grid-cols-2 items-center justify-center md:gap-8 gap-0 mt-10">
+        {/*  eslint-disable-next-line react/no-unescaped-entities */}
+        <h1 className="text-3xl md:text-5xl text-white text-center"> Who's watching?</h1>
+        <div className="lg:flex grid md:grid-cols-3 grid-cols-2 items-center justify-center md:gap-6 gap-0 mt-10">
            
            {profiles?.map((profile : ProfileA, index) => {
         return (
@@ -52,6 +49,11 @@ const Profiles = () =>{
       })}
     
           {profiles?.length <5 && <AddNewProfile/>}
+        </div>
+        <div className="text-center mt-16">
+          <span className="border-2 border-gray-500 hover:border-gray-300 py-1 px-6 text-gray-500 text-xl hover:text-gray-300  cursor-pointer">
+          Manage Profiles
+          </span>
         </div>
            </div>
         </div>
