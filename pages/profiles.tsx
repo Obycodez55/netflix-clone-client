@@ -58,6 +58,6 @@ const Profiles = () =>{
         </div>
         </>
     )
-}
+} 
 
 export default Profiles;
