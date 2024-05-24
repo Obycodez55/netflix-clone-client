@@ -10,7 +10,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ visible }) => {
     }
 
     return (
-        <div className="bg-black w-56 absolute top-8 left-0 flex-col border-gray-800 flex">
+        <div className="bg-black w-56 flex-col border-gray-800 flex">
             <div className="flex flex-col gap-4">
                 <div className="px-3 text-center text-white hover:underline">
                     Home
