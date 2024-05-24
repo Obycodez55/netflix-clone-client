@@ -33,14 +33,14 @@ const Profile: React.FC<ProfileProps> = ({
     return(
         <div onClick={setProfile}>
 
-        <div className="group flex-row w-44 mx-auto">
+        <div className="group flex-row w-24 md:w-36 mx-auto">
 
             <div 
             className="
-            w-36
-            h-36
-            md:w-44
-            md:h-44
+            h-24
+            w-24
+            md:w-36
+            md:h-36
             rounded-md
             flex
             items-center
@@ -48,14 +48,14 @@ const Profile: React.FC<ProfileProps> = ({
             border-2
             border-transparent
             group-hover:cursor-pointer
-            group-hover:border-white
+            group-hover:border-gray-300
             overflow-hidden
             ">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img} alt="Profile" />
             </div>
 
-            <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">
+            <div className="mt-2 text-gray-500 text-xl text-center group-hover:text-gray-300">
         {name}
             </div>
 
