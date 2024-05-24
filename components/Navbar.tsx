@@ -83,8 +83,10 @@ const Navbar = () => {
             <div onClick={toggleMobileMenu} onMouseEnter={()=>setMobileMenuVisible(true)} onMouseLeave={() =>setMobileMenuVisible(false)} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
                 <p className="text-white text-sm">Browse</p>
                 <MdArrowDropDown className={`text-white transition w-6 h-6 ${mobileMenuVisible? 'rotate-180' : "rotate-0"}`}/>
-
+                <div className="absolute top-6 pt-2 left-0">
                 <MobileMenu visible={mobileMenuVisible}/>
+                </div>
+                
             </div>
                 <div className="flex flex-row ml-auto gap-7 items-center">
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
@@ -98,7 +100,10 @@ const Navbar = () => {
                         <img src={`/images/profiles/${currentProfile?.profilePic}.png`} alt={currentProfile?.name}/>
                     </div>
                         <MdArrowDropDown className={`text-white transition w-6 h-6 ${accountMenuVisible? 'rotate-180' : "rotate-0"}`}/>
+                        <div className="absolute top-6 lg:top-8 pt-4 right-0">
                         <AccountMenu visible={accountMenuVisible} profiles={otherProfiles}/>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -29,7 +29,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
 
     if(!visible) return null;
     return (
-        <div className="bg-black w-56 absolute top-14 right-0 py-5 flex-col flex border-2 border-gray-800">
+        <div className="bg-black w-56 py-5 flex-col flex border-2 border-gray-800">
             <div className="flex flex-col gap-3">
                 {profiles?.map((profile, index)=>{
                     return <NavProfile key={index} id={profile.id} profilePic={profile.profilePic} name={profile.name}/>
