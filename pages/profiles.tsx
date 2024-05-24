@@ -51,7 +51,7 @@ const Profiles = () =>{
         </div>
         <div className="text-center mt-16">
           <span className="border-2 border-gray-500 hover:border-gray-300 py-1 px-6 text-gray-500 text-xl hover:text-gray-300  cursor-pointer">
-          Manage Profile
+          Manage Profiles
           </span>
         </div>
            </div>
