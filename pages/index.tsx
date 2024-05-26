@@ -2,11 +2,9 @@ import axios from "axios";
 import {parse} from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
-import { useRouter } from "next/router";
-import { useCallback } from "react";
 
-import useCurrentUser from "@/hooks/useCurrentUser";
 import Navbar from "@/components/Navbar";
+import Billboard from "@/components/Billboard";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req  = context.req as IncomingMessage;
@@ -35,7 +33,8 @@ export default function Home() {
 
   return (
     <>
-   <Navbar/>
+   <Navbar />
+   <Billboard />
     </>
   );
 }
