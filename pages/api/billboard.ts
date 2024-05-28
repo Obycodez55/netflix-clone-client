@@ -7,7 +7,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if (request.method !== "GET") return response.status(405).end();
     try {
         const token = request.cookies.token;
-        const {data} = await axios.get(`${baseUrl}/users/findOne`, {
+        const { type } = request.query;
+        let url = `${baseUrl}/movies/random`
+        if (type) url = `${baseUrl}/movies/random?type=${type}`;
+        const {data} = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
