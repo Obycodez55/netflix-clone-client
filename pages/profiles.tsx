@@ -26,6 +26,7 @@ const Profiles = () =>{
 
     const {user} = useCurrentUser();
   const profiles = user?.profiles;
+  // console.log(profiles);
     return (
       
       <>
