@@ -5,6 +5,9 @@ import { NextPageContext } from "next";
 
 import Navbar from "@/components/Navbar";
 import Billboard from "@/components/Billboard";
+import { use } from "react";
+import { useProfile } from "@/contexts/ProfileContext";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req  = context.req as IncomingMessage;
@@ -30,7 +33,9 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function Home() {
-
+  const router = useRouter();
+  const profileContext = useProfile();
+  if (!profileContext) router.push("/profiles");  
   return (
     <>
    <Navbar />

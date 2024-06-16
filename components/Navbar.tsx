@@ -6,14 +6,14 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import AccountMenu from "./AccountMenu";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useCurrentProfile from "@/hooks/useCurrentProfile";
+import { useProfile } from "@/contexts/ProfileContext";
 
 const TOP_OFFSET = 66;
 
 const Navbar = () => {
     const {user} = useCurrentUser();
     const profiles = user?.profiles;
-    const {profile: currentProfile} = useCurrentProfile();
+    const currentProfile = useProfile()?.profile;
 
     const otherProfiles = profiles?.filter((profile)=>{
         return profile.id != currentProfile?.id;
