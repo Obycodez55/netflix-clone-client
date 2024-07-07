@@ -1,3 +1,4 @@
+import { useProfile } from "@/contexts/ProfileContext";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
@@ -17,12 +18,13 @@ const Profile: React.FC<ProfileProps> = ({
 }
     )=>{
         const router = useRouter();
+        const updateProfile = useProfile()?.updateProfile;
         const setProfile = useCallback(async()=>{
             try {
                 await axios.post(`api/setProfile`, {
                    id
                 });
-                
+                updateProfile!();
                 router.push("/");
             } catch (error:unknown) {
                 console.log(error);
