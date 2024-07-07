@@ -4,7 +4,8 @@ export interface ProfileA {
     profilePic: "red" | "blue" | "yellow" | "green" | "darkblue"| "kids";
     createdAt?: Date | string
     updatedAt?: Date | string
-    favouriteIds?: string[]
+    favouriteIds?: string[];
+    favourites: Movie[]
 }
 export interface User {
     id?: string

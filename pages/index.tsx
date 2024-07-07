@@ -44,7 +44,8 @@ export default function Home() {
   const { movies } = useMovieList();
   const router = useRouter();
   const profileContext = useProfile();
-  if (!profileContext) router.push("/profiles"); 
+  if (!profileContext) router.push("/profiles");
+  const favourites = profileContext?.profile?.favourites;
   const updateProfile = profileContext?.updateProfile;
   useEffect(() => {
     updateProfile!();
@@ -54,7 +55,8 @@ export default function Home() {
       <Navbar />
       <Billboard />
       <div className="pb-40">
-        <MovieList title="Trending Now" data={movies}/>
+        <MovieList title="Trending Now" data={movies} />
+        <MovieList title="My List" data={favourites!} />
       </div>
     </>
   );
