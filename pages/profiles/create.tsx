@@ -1,4 +1,4 @@
-import Input from "@/components/input";
+import Input from "@/components/Input";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { User } from "@/index";
 import baseUrl from "@/Utils";
@@ -27,8 +27,7 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
 const CreateProfile = ({token}: {token: string}) =>{
-    const {data} = useCurrentUser("../api/current");
-    const user = data as User;
+    const {user} = useCurrentUser("../api/currentUser");
   const profiles = user?.profiles;
 
 
@@ -73,9 +72,7 @@ const handleChange = useCallback((event : any)=>{
 
             <div className="bg-black w-full h-full lg:bg-opacity-50">
             <nav className="px-12 py-5 flex gap-8 items-center">
-                <a href="/profiles">
-                     <FaArrowLeft className="text-neutral-400 w-10 h-10"/>
-                     </a>
+                     <FaArrowLeft onClick={() => router.back()} className="text-neutral-400 w-10 h-10"/>
            
             <div className="flex max-md:items-center max-md:justify-center">
             <img src="/images/logo.svg" alt="Logo" className="h-12" />

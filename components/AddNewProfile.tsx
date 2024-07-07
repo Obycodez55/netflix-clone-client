@@ -2,12 +2,23 @@ import React from "react";
 import { FaCirclePlus } from "react-icons/fa6";
 
 interface ProfileProps{
-    
+    small? : boolean
 }
 
 
-const AddNewProfile: React.FC<ProfileProps> = ({})=>{
-    return(
+const AddNewProfile: React.FC<ProfileProps> = ({small})=>{
+    if (small) return (
+        <a href="/profiles/create">
+        <div onClick={() =>{}} className="px-3 group/item flex flow-row gap-3 items-center w-full">
+        <FaCirclePlus className="text-neutral-400 w-7 h-7"/>
+        <p className="text-white text-sm group-hover/item:underline">
+            Add new
+        </p>
+</div>
+</a>
+    )
+
+return(
         <a href="/profiles/create">
 
 <div className="group flex-row w-44 mx-auto">
