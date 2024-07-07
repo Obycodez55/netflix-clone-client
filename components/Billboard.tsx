@@ -1,4 +1,5 @@
 import useBillboard from "@/hooks/useBillboard";
+import PlayButton from "./PlayButton";
 
 const Billboard = () =>{
     const { movie } = useBillboard();
@@ -28,6 +29,7 @@ const Billboard = () =>{
                     {movie?.description}
                 </p>
                 <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
+                    <PlayButton movieId={movie?.id}/>
                     <button className="
                     bg-white
                     text-white
