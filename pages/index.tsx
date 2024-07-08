@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import MovieList from "@/components/MovieList";
 import useMovieList from "@/hooks/useMovieList";
 import { useEffect } from "react";
+import InfoModal from "@/components/InfoModal";
+import useInfoModal from "@/hooks/useInfoModal";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req as IncomingMessage;
@@ -47,11 +49,15 @@ export default function Home() {
   if (!profileContext) router.push("/profiles");
   const favourites = profileContext?.profile?.favourites;
   const updateProfile = profileContext?.updateProfile;
+
+  const {isOpen, closeModal} = useInfoModal();
+
   useEffect(() => {
     updateProfile!();
   }, []);
   return (
     <>
+    <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar />
       <Billboard />
       <div className="pb-40">
