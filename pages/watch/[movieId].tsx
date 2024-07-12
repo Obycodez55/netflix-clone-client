@@ -4,7 +4,7 @@ import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -32,6 +32,7 @@ const Watch = () => {
   const movieId = router.query.movieId as string;
   const {movie} = useMovie(movieId);
   const videoRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
     const handleFullscreen = () => {
      if (document.fullscreenElement) {
@@ -49,7 +50,7 @@ const Watch = () => {
             }
         }
     };
-
+// TODO: TimeStamp Request
     useEffect(() => {
         const handleKeyDown = (event: any) => {
             if (event.key === 'f' || event.key === 'F') {
@@ -63,6 +64,28 @@ const Watch = () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
+
+    useEffect(() => {
+      const videoElement = videoRef.current as any;
+      console.log(currentTime.toFixed(2))
+      const handleTimeUpdate = () => {
+          if (videoElement) {
+              setCurrentTime(videoElement.currentTime);
+          }
+      };
+
+      if (videoElement) {
+          videoElement.addEventListener('timeupdate', handleTimeUpdate);
+          videoElement.focus(); // Focus on the video element when the component mounts
+      }
+
+      return () => {
+          if (videoElement) {
+              videoElement.removeEventListener('timeupdate', handleTimeUpdate);
+          }
+      };
+  }, [currentTime]);
+
   return (
     <div className="h-screen w-screen bg-black">
         <nav 
