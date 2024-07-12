@@ -4,6 +4,7 @@ import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useRef } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -30,7 +31,38 @@ const Watch = () => {
   const {profile, updateProfile} = useProfile()!;
   const movieId = router.query.movieId as string;
   const {movie} = useMovie(movieId);
-  console.log(movie)
+  const videoRef = useRef(null);
+
+    const handleFullscreen = () => {
+     if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else if (videoRef.current) {
+          const current = videoRef.current as any
+            if (current.requestFullscreen) {
+              current.requestFullscreen();
+            } else if (current.mozRequestFullScreen) { /* Firefox */
+                current.mozRequestFullScreen();
+            } else if (current.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                current.webkitRequestFullscreen();
+            } else if (current.msRequestFullscreen) { /* IE/Edge */
+                current.msRequestFullscreen();
+            }
+        }
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (event: any) => {
+            if (event.key === 'f' || event.key === 'F') {
+                handleFullscreen();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
   return (
     <div className="h-screen w-screen bg-black">
         <nav 
@@ -55,6 +87,7 @@ const Watch = () => {
             </p>
         </nav>
         <video 
+        ref={videoRef}
             autoPlay
             controls
             className="h-full w-full"
