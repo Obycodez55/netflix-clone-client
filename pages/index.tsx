@@ -12,6 +12,7 @@ import useMovieList from "@/hooks/useMovieList";
 import { useEffect } from "react";
 import InfoModal from "@/components/InfoModal";
 import useInfoModal from "@/hooks/useInfoModal";
+import ContinueWatching from "@/components/ContinueWatching";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req as IncomingMessage;
@@ -48,6 +49,7 @@ export default function Home() {
   const profileContext = useProfile();
   if (!profileContext) router.push("/profiles");
   const favourites = profileContext?.profile?.favourites;
+  const continueWatching = profileContext?.profile?.ContinueWatching;
   const updateProfile = profileContext?.updateProfile;
 
   const {isOpen, closeModal} = useInfoModal();
@@ -63,6 +65,7 @@ export default function Home() {
       <div className="pb-40">
         <MovieList title="Trending Now" data={movies} />
         <MovieList title="My List" data={favourites!} />
+        <ContinueWatching data={continueWatching!} />
       </div>
     </>
   );
