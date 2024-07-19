@@ -15,7 +15,7 @@ export default async function handler(
     let data: any;
 
     if (request.method === "PUT") {
-      ({ data } = await axios.post(
+      ({ data } = await axios.put(
         `${baseUrl}/movies/continue/${profileId}`,
         { movieId, timestamp },
         {

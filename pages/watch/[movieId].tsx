@@ -1,5 +1,6 @@
 import { useProfile } from "@/contexts/ProfileContext";
 import useMovie from "@/hooks/useMovie";
+import axios from "axios";
 import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
@@ -33,6 +34,7 @@ const Watch = () => {
   const {movie} = useMovie(movieId);
   const videoRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
+  const [ended, setEnded] = useState(false);
 
     const handleFullscreen = () => {
      if (document.fullscreenElement) {
@@ -67,24 +69,39 @@ const Watch = () => {
 
     useEffect(() => {
       const videoElement = videoRef.current as any;
-      console.log(currentTime.toFixed(2))
       const handleTimeUpdate = () => {
           if (videoElement) {
               setCurrentTime(videoElement.currentTime);
           }
       };
-
+      const handleEnded = async() => {
+        // Remove from countinue Watching
+        console.log("Ended");
+        await axios.delete("/api/continueWatching", {data: {movieId} });
+    };
       if (videoElement) {
           videoElement.addEventListener('timeupdate', handleTimeUpdate);
+          videoElement.addEventListener('ended', handleEnded);
           videoElement.focus(); // Focus on the video element when the component mounts
       }
 
       return () => {
           if (videoElement) {
               videoElement.removeEventListener('timeupdate', handleTimeUpdate);
+              videoElement.removeEventListener('ended', handleEnded);
           }
       };
-  }, [currentTime]);
+  }, [currentTime, movieId]);
+
+  useEffect(() => {
+    const intervalId = setInterval(async() => {
+        const videoElement = videoRef.current as any;
+        console.log(videoElement.currentTime.toFixed(2));
+            await axios.put("/api/continueWatching", {movieId, timestamp: Number(videoElement.currentTime.toFixed(2))});
+    }, 10000);
+
+    return () => clearInterval(intervalId); // Clear interval on component unmount
+}, []);
 
   return (
     <div className="h-screen w-screen bg-black">
