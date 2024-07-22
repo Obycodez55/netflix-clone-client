@@ -1,6 +1,6 @@
 import fetcher from "@/lib/fetcher"
 import useSWR from "swr"
-import { Movie } from "..";
+import { IMovieList } from "..";
 
 const useMovieList= () => {
     let {data, error, isLoading, mutate} = useSWR("api/movieList", fetcher, {
@@ -8,9 +8,9 @@ const useMovieList= () => {
         revalidateIfStale: true,
         revalidateOnReconnect: true
     });
-    const movies = data as Movie[];
+    const lists = data as IMovieList[];
     return {
-        movies, 
+        lists, 
         error,
         isLoading,
         mutate
