@@ -5,7 +5,7 @@ import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -29,7 +29,6 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const Watch = () => {
   const router = useRouter();
-  const {profile, updateProfile} = useProfile()!;
   const movieId = router.query.movieId as string;
   const {movie} = useMovie(movieId);
   const videoRef = useRef(null);
@@ -52,6 +51,22 @@ const Watch = () => {
             }
         }
     };
+
+    const updateTime = useCallback(async() => {
+        const videoElement = videoRef.current as any;
+        if (videoElement) {
+            await axios.put("/api/continueWatching", {movieId, timestamp: videoElement.currentTime});
+        }
+    }, [videoRef, movieId]);
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        updateTime();
+      }, 15000); // 15000 milliseconds = 15 seconds
+  
+      // Cleanup interval on component unmount
+      return () => clearInterval(intervalId);
+    }, [updateTime]);
 // TODO: TimeStamp Request
     useEffect(() => {
         const handleKeyDown = (event: any) => {
