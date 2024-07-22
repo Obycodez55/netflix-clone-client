@@ -1,3 +1,20 @@
+interface ContinueWatching {
+    id: string
+    profileId: string
+    movieId: string
+    timestamp: number
+    createdAt: Date
+    updatedAt: Date
+    movie: Movie
+}
+
+export interface Favourite {
+    id: string
+    profileId: string
+    movieId: string
+    createdAt: Date
+    movie: Movie
+}
 export interface ProfileA {
     id: string
     name: string
@@ -5,7 +22,8 @@ export interface ProfileA {
     createdAt?: Date | string
     updatedAt?: Date | string
     favouriteIds?: string[];
-    favourites: Movie[]
+    favourites: Favourite[]
+    ContinueWatching: ContinueWatching[]
 }
 export interface User {
     id?: string
@@ -40,4 +58,9 @@ export interface Movie{
     createdAt: Date 
     updatedAt: Date
     listIDs: string[]
+}
+
+export interface IMovieList{
+    title: string, 
+    data: Movie[]
 }

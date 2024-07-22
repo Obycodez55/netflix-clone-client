@@ -12,6 +12,8 @@ import useMovieList from "@/hooks/useMovieList";
 import { useEffect } from "react";
 import InfoModal from "@/components/InfoModal";
 import useInfoModal from "@/hooks/useInfoModal";
+import ContinueWatching from "@/components/ContinueWatching";
+import { IMovieList } from "..";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req as IncomingMessage;
@@ -42,16 +44,26 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
+export function shuffleArray<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export default function Home() {
-  const { movies } = useMovieList();
+  const { lists } = useMovieList();
   const router = useRouter();
   const profileContext = useProfile();
   if (!profileContext) router.push("/profiles");
   const favourites = profileContext?.profile?.favourites;
+  const myList = favourites?.map(fav => fav.movie);
+  const continueWatching = profileContext?.profile?.ContinueWatching;
   const updateProfile = profileContext?.updateProfile;
-
+  const shuffledLists = lists ? shuffleArray<IMovieList>(lists) : [];
   const {isOpen, closeModal} = useInfoModal();
-
+  
   useEffect(() => {
     updateProfile!();
   }, []);
@@ -61,8 +73,11 @@ export default function Home() {
       <Navbar />
       <Billboard />
       <div className="pb-40">
-        <MovieList title="Trending Now" data={movies} />
-        <MovieList title="My List" data={favourites!} />
+        <MovieList key="favourites" title="My List" data={myList!} ordered/>
+        <ContinueWatching data={continueWatching!} />
+        {shuffledLists.map(({title, data}) => (
+          <MovieList key={title} title={title} data={data} />
+        ))}
       </div>
     </>
   );
