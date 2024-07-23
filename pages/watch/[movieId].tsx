@@ -30,98 +30,111 @@ export async function getServerSideProps(context: NextPageContext) {
 const Watch = () => {
   const router = useRouter();
   const movieId = router.query.movieId as string;
-  const {movie} = useMovie(movieId);
+  const { movie } = useMovie(movieId);
   const videoRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [ended, setEnded] = useState(false);
 
-    const handleFullscreen = () => {
-     if (document.fullscreenElement) {
-        document.exitFullscreen();
+  const handleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
     } else if (videoRef.current) {
-          const current = videoRef.current as any
-            if (current.requestFullscreen) {
-              current.requestFullscreen();
-            } else if (current.mozRequestFullScreen) { /* Firefox */
-                current.mozRequestFullScreen();
-            } else if (current.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-                current.webkitRequestFullscreen();
-            } else if (current.msRequestFullscreen) { /* IE/Edge */
-                current.msRequestFullscreen();
-            }
-        }
-    };
-
-    const updateTime = useCallback(async() => {
-        const videoElement = videoRef.current as any;
-        if (videoElement) {
-            await axios.put("/api/continueWatching", {movieId, timestamp: videoElement.currentTime});
-        }
-    }, [videoRef, movieId]);
-
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        updateTime();
-      }, 15000); // 15000 milliseconds = 15 seconds
-  
-      // Cleanup interval on component unmount
-      return () => clearInterval(intervalId);
-    }, [updateTime]);
-// TODO: TimeStamp Request
-    useEffect(() => {
-        const handleKeyDown = (event: any) => {
-            if (event.key === 'f' || event.key === 'F') {
-                handleFullscreen();
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
-
-    useEffect(() => {
-      const videoElement = videoRef.current as any;
-      const handleTimeUpdate = () => {
-          if (videoElement) {
-              setCurrentTime(videoElement.currentTime);
-          }
-      };
-      const handleEnded = async() => {
-        // Remove from countinue Watching
-        console.log("Ended");
-        await axios.delete("/api/continueWatching", {data: {movieId} });
-    };
-      if (videoElement) {
-          videoElement.addEventListener('timeupdate', handleTimeUpdate);
-          videoElement.addEventListener('ended', handleEnded);
-          videoElement.focus(); // Focus on the video element when the component mounts
+      const current = videoRef.current as any;
+      if (current.requestFullscreen) {
+        current.requestFullscreen();
+      } else if (current.mozRequestFullScreen) {
+        /* Firefox */
+        current.mozRequestFullScreen();
+      } else if (current.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        current.webkitRequestFullscreen();
+      } else if (current.msRequestFullscreen) {
+        /* IE/Edge */
+        current.msRequestFullscreen();
       }
+    }
+  };
 
-      return () => {
-          if (videoElement) {
-              videoElement.removeEventListener('timeupdate', handleTimeUpdate);
-              videoElement.removeEventListener('ended', handleEnded);
-          }
-      };
+  const updateTime = useCallback(async () => {
+    const videoElement = videoRef.current as any;
+    if (videoElement) {
+      console.log("updated");
+      await axios.put("/api/continueWatching", {
+        movieId,
+        timestamp: videoElement.currentTime
+      });
+    }
+  }, [videoRef, movieId]);
+
+  const removeFromList = useCallback(async () => {
+    const videoElement = videoRef.current as any;
+    if (videoElement) {
+      console.log("deleted");
+      await axios.delete("/api/continueWatching", { data: { movieId } });
+    }
+  }, [videoRef, movieId]);
+
+  // TODO: TimeStamp Request
+  useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      if (event.key === "f" || event.key === "F") {
+        handleFullscreen();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    const videoElement = videoRef.current as any;
+    const handleTimeUpdate = () => {
+      if (videoElement) {
+        setCurrentTime(videoElement.currentTime);
+      }
+    };
+    const handleEnded = () => {
+      // Set ended to true
+      console.log("ended");
+      setEnded(true);
+      removeFromList();
+      console.log({ ended });
+    };
+    if (videoElement) {
+      videoElement.addEventListener("timeupdate", handleTimeUpdate);
+      videoElement.addEventListener("ended", handleEnded);
+      videoElement.focus(); // Focus on the video element when the component mounts
+    }
+
+    return () => {
+      if (videoElement) {
+        videoElement.removeEventListener("timeupdate", handleTimeUpdate);
+        videoElement.removeEventListener("ended", handleEnded);
+      }
+    };
   }, [currentTime, movieId]);
 
   useEffect(() => {
-    const intervalId = setInterval(async() => {
-        const videoElement = videoRef.current as any;
-        console.log(videoElement.currentTime.toFixed(2));
-            await axios.put("/api/continueWatching", {movieId, timestamp: Number(videoElement.currentTime.toFixed(2))});
+    const intervalId = setInterval(() => {
+      if (!ended) {
+        updateTime();
+      } else {
+        console.log("cleared");
+        clearInterval(intervalId);
+        removeFromList();
+      }
     }, 10000);
 
     return () => clearInterval(intervalId); // Clear interval on component unmount
-}, []);
+  }, [ended]);
 
   return (
     <div className="h-screen w-screen bg-black">
-        <nav 
-            className="
+      <nav
+        className="
                 fixed
                 w-full
                 p-4
@@ -132,23 +145,25 @@ const Watch = () => {
                 bg-black
                 bg-opacity-70
             "
-        >
-            <AiOutlineArrowLeft onClick={() => router.back()} className="text-white cursor-pointer" size={40}/>
-            <p className="text-white text-xl md:text-3xl font-bold">
-                <span className="font-light">
-                    Watching: 
-                </span>
-                {" "}{movie?.title}
-            </p>
-        </nav>
-        <video 
+      >
+        <AiOutlineArrowLeft
+          onClick={() => router.back()}
+          className="text-white cursor-pointer"
+          size={40}
+        />
+        <p className="text-white text-xl md:text-3xl font-bold">
+          <span className="font-light">Watching:</span> {movie?.title}
+        </p>
+      </nav>
+      <video
         ref={videoRef}
-            autoPlay
-            controls
-            className="h-full w-full"
-            src={movie?.videoUrl}></video>
+        autoPlay
+        controls
+        className="h-full w-full"
+        src={movie?.videoUrl}
+      ></video>
     </div>
-    );
+  );
 };
 
 export default Watch;

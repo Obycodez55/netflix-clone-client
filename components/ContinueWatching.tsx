@@ -15,7 +15,9 @@ const ContinueWatching: React.FC<ContinueWatchingProps> = ({data}) => {
           <p className="">Continue Watching</p>
           <div className="grid grid-cols-4 gap-2">
             {data.slice(0, 4).map((item) => (
-              <MovieCard key={item.movie.id} movie={item.movie}/>
+              <div>
+              <MovieCard key={item.movie.id} movie={item.movie} continueCard timestamp={item.timestamp}/>
+              </div>
             ))}
           </div>
           

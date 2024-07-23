@@ -28,10 +28,10 @@ const Auth = () => {
                 username,
                 password
             });
-            setEmail(""); setUserName(""); setPassword(""); 
             await axios.post("api/setToken", data);
             router.push("/profiles");
         } catch (error:unknown) {
+            setEmail(""); setUserName(""); setPassword(""); 
             if(error instanceof AxiosError){
                 error.status !== 500 && error.response ? setErrorMessage(error.response.data.message) : setErrorMessage("Internal Server Error! Try again");
             }
