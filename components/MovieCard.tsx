@@ -46,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         alt={movie.title}
       />
       {continueCard && (
-        <div className="w-full bg-black h-2 transition duration group-hover:opacity-90 sm:group-hover:opacity-0 delay-300">
+        <div className="w-full bg-black h-[0.3rem] transition duration group-hover:opacity-90 sm:group-hover:opacity-0 delay-300">
           <div
             style={{
               width: `${width}%`

@@ -53,6 +53,7 @@ export interface Movie{
     year: number
     duration: string
     videoDuration: number;
+    timestamp?: number
     limit: number
     genre: Genre[]
     isSeries: boolean

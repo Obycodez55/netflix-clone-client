@@ -31,7 +31,7 @@ const Watch = () => {
   const router = useRouter();
   const movieId = router.query.movieId as string;
   const { movie } = useMovie(movieId);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [ended, setEnded] = useState(false);
 
@@ -56,7 +56,7 @@ const Watch = () => {
   };
 
   const updateTime = useCallback(async () => {
-    const videoElement = videoRef.current as any;
+    const videoElement = videoRef.current;
     if (videoElement) {
       console.log("updated");
       await axios.put("/api/continueWatching", {
@@ -67,7 +67,7 @@ const Watch = () => {
   }, [videoRef, movieId]);
 
   const removeFromList = useCallback(async () => {
-    const videoElement = videoRef.current as any;
+    const videoElement = videoRef.current;
     if (videoElement) {
       console.log("deleted");
       await axios.delete("/api/continueWatching", { data: { movieId } });
@@ -90,7 +90,15 @@ const Watch = () => {
   }, []);
 
   useEffect(() => {
-    const videoElement = videoRef.current as any;
+    const videoElement = videoRef.current;
+    if (videoElement && movie?.timestamp) {
+      videoElement.currentTime = movie?.timestamp;
+    }
+  }
+  , [movie?.timestamp]);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
     const handleTimeUpdate = () => {
       if (videoElement) {
         setCurrentTime(videoElement.currentTime);
@@ -103,9 +111,13 @@ const Watch = () => {
       removeFromList();
       console.log({ ended });
     };
+    const handlePlaying = () => {
+      setEnded(false);
+    }
     if (videoElement) {
       videoElement.addEventListener("timeupdate", handleTimeUpdate);
       videoElement.addEventListener("ended", handleEnded);
+      videoElement.addEventListener("playing", handlePlaying);
       videoElement.focus(); // Focus on the video element when the component mounts
     }
 
@@ -123,7 +135,6 @@ const Watch = () => {
         updateTime();
       } else {
         console.log("cleared");
-        clearInterval(intervalId);
         removeFromList();
       }
     }, 10000);
