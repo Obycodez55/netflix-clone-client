@@ -62,7 +62,7 @@ const handleChange = useCallback((event : any)=>{
     setErrorMessage("");
     const value = event.target.value;
     setName(value);
-    const existingProfile = profiles.filter((profile) =>{
+    const existingProfile = profiles?.filter((profile) =>{
         return profile.name.toLowerCase() == value.toLowerCase();
     });
     if(existingProfile.length !== 0 ) setErrorMessage("Name has been used, Try again!");

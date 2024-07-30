@@ -142,6 +142,8 @@ const Watch = () => {
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [ended]);
 
+
+
   return (
     <div className="h-screen w-screen bg-black">
       <nav

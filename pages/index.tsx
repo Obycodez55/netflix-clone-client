@@ -72,7 +72,7 @@ export default function Home() {
     <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar />
       <Billboard />
-      <div className="pb-40">
+      <div className="max-md:mt-8">
         <MovieList key="favourites" title="My List" data={myList!} ordered/>
         <ContinueWatching data={continueWatching!} />
         {shuffledLists.map(({title, data}) => (

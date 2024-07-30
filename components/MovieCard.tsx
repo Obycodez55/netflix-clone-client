@@ -29,6 +29,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
+        onClick={() => openModal(movie?.id)}
         className="
             cursor-pointer
             object-cover
@@ -46,12 +47,12 @@ const MovieCard: React.FC<MovieCardProps> = ({
         alt={movie.title}
       />
       {continueCard && (
-        <div className="w-full bg-black h-[0.3rem] transition duration group-hover:opacity-90 sm:group-hover:opacity-0 delay-300">
+        <div className="w-full bg-black md:h-[0.3rem] h-[0.2rem] transition duration group-hover:opacity-90 sm:group-hover:opacity-0 delay-300">
           <div
             style={{
               width: `${width}%`
             }}
-            className={`bg-red-800 h-full`}
+            className={`bg-red-900 h-full`}
           ></div>
         </div>
       )}
