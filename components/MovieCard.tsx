@@ -9,23 +9,13 @@ import { BiChevronDown } from "react-icons/bi";
 
 interface MovieCardProps {
   movie: Movie;
-  continueCard?: boolean;
-  timestamp?: number;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({
-  movie,
-  continueCard,
-  timestamp
+  movie
 }) => {
   const router = useRouter();
   const { openModal } = useInfoModal();
-  const [width, setWidth] = useState(0);
-  useEffect(() => {
-    if (timestamp) {
-        setWidth((timestamp / movie.videoDuration) * 100);
-    }
-  }, [timestamp, movie.videoDuration]);
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
@@ -46,16 +36,6 @@ const MovieCard: React.FC<MovieCardProps> = ({
         src={movie.thumbnailUrl}
         alt={movie.title}
       />
-      {continueCard && (
-        <div className="w-full bg-black md:h-[0.3rem] h-[0.2rem] transition duration group-hover:opacity-90 sm:group-hover:opacity-0 delay-300">
-          <div
-            style={{
-              width: `${width}%`
-            }}
-            className={`bg-red-900 h-full`}
-          ></div>
-        </div>
-      )}
       <div
         className="
             opacity-0

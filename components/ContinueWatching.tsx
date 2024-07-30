@@ -1,7 +1,7 @@
 import React from 'react'
 import type { ContinueWatching } from '..';
 import { isEmpty } from 'lodash';
-import MovieCard from './MovieCard';
+import ContinueCard from './ContinueCard';
 
 type ContinueWatchingProps = {
     data: ContinueWatching[]
@@ -15,8 +15,8 @@ const ContinueWatching: React.FC<ContinueWatchingProps> = ({data}) => {
           <p className="">Continue Watching</p>
           <div className="grid grid-cols-4 gap-2">
             {data.slice(0, 4).map((item) => (
-              <div>
-              <MovieCard key={item.movie.id} movie={item.movie} continueCard timestamp={item.timestamp}/>
+              <div key={item.id}>
+                <ContinueCard movie={item.movie} timestamp={item.timestamp}/>
               </div>
             ))}
           </div>

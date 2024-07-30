@@ -57,6 +57,7 @@ export default function Home() {
   const router = useRouter();
   const profileContext = useProfile();
   if (!profileContext) router.push("/profiles");
+  console.log(profileContext?.profile);
   const favourites = profileContext?.profile?.favourites;
   const myList = favourites?.map(fav => fav.movie);
   const continueWatching = profileContext?.profile?.ContinueWatching;
