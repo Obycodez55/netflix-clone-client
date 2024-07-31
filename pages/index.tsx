@@ -14,6 +14,8 @@ import InfoModal from "@/components/InfoModal";
 import useInfoModal from "@/hooks/useInfoModal";
 import ContinueWatching from "@/components/ContinueWatching";
 import { IMovieList } from "..";
+import { Modal } from "@/components/Modal";
+import Search from "@/components/Search";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req as IncomingMessage;
@@ -52,12 +54,24 @@ export function shuffleArray<T>(array: T[]): T[] {
   return array;
 }
 
+export function getMovieTitles (data: IMovieList[]) {
+  const titles: string[] = [];
+  data?.forEach(list => {
+    if (list.title == "Most Watched" || list.title == "Most Loved") {
+      list.data.forEach(movie => {
+        titles.push(movie.title);
+      });
+    }
+  });
+  return titles;
+}
+
 export default function Home() {
   const { lists } = useMovieList();
   const router = useRouter();
+  const text = router.query.search as string;
   const profileContext = useProfile();
   if (!profileContext) router.push("/profiles");
-  console.log(profileContext?.profile);
   const favourites = profileContext?.profile?.favourites;
   const myList = favourites?.map(fav => fav.movie);
   const continueWatching = profileContext?.profile?.ContinueWatching;
@@ -70,8 +84,13 @@ export default function Home() {
   }, []);
   return (
     <>
+    {text && (
+      <Modal onClose={()=> router.push("/")}>
+      <Search text={text} placeholders={getMovieTitles(lists)} router={router}/>
+    </Modal>
+    )}
     <InfoModal visible={isOpen} onClose={closeModal}/>
-      <Navbar />
+      <Navbar router={router}/>
       <Billboard />
       <div className="max-md:mt-8">
         <MovieList key="favourites" title="My List" data={myList!} ordered/>

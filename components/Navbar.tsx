@@ -7,10 +7,11 @@ import { FaRegBell } from "react-icons/fa";
 import AccountMenu from "./AccountMenu";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { useProfile } from "@/contexts/ProfileContext";
+import { NextRouter } from "next/router";
 
 const TOP_OFFSET = 66;
 
-const Navbar = () => {
+const Navbar = ({router} : {router: NextRouter}) => {
     const {user} = useCurrentUser();
     const profiles = user?.profiles;
     const currentProfile = useProfile()?.profile;
@@ -47,7 +48,7 @@ const Navbar = () => {
     }, []);
     
     return (
-        <nav className="w-full fixed z-40">
+        <nav className="w-full fixed z-30">
             <div 
                 className={`
                     px-4
@@ -90,7 +91,7 @@ const Navbar = () => {
             </div>
                 <div className="flex flex-row ml-auto gap-7 items-center">
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
-                    <IoSearch className="h-6 w-6"/>
+                    <IoSearch className="h-6 w-6" onClick={() => router.push("/?search=%%", "/?search")}/>
                     </div>
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
                     <FaRegBell className="h-5 w-5"/>

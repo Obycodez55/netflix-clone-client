@@ -24,7 +24,6 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
   return (
     <div
       onClick={toggleFavourite}
-      onMouseEnter={() => console.log({isFavourite})}
       className="
         cursor-pointer 
         group/item 

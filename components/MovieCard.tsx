@@ -19,7 +19,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
-        onClick={() => openModal(movie?.id)}
+        onClick={() => openModal(movie)}
         className="
             cursor-pointer
             object-cover
@@ -97,7 +97,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
             <FavoriteButton movieId={movie.id} />
             <div className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
               <BiChevronDown
-                onClick={() => openModal(movie?.id)}
+                onClick={() => openModal(movie)}
                 size={30}
                 className="text-white group-hover/item:text-neutral-300"
               />
@@ -112,7 +112,11 @@ const MovieCard: React.FC<MovieCardProps> = ({
             </p>
           </div>
           <div className="flex flex-row mt-4 gap-2 items-center">
-            <p className="text-white text-[10px] lg:text-sm">{movie.genre}</p>
+            <p className="text-white text-[10px] lg:text-sm font-semibold">
+              {movie.genre.map(genre=> (
+                <span key={genre} className="mr-1">{genre}</span>
+              ))}
+            </p>
           </div>
         </div>
       </div>

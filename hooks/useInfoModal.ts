@@ -1,18 +1,19 @@
 import React from 'react'
 import { create } from 'zustand';
+import { Movie } from '..';
 
 export interface ModalStoreInterface{
-    movieId?: string;
+    movie?: Movie;
     isOpen: boolean;
-    openModal: (movieId: string) => void;
+    openModal: (movie: Movie) => void;
     closeModal: () => void;
 }
 
 const useInfoModal = create<ModalStoreInterface>((set) => ({
-    movieId: undefined,
+    movie: undefined,
     isOpen: false,
-    openModal: (movieId: string) => set({movieId, isOpen: true}),
-    closeModal: () => set({isOpen: false, movieId: undefined}),
+    openModal: (movie: Movie) => set({movie, isOpen: true}),
+    closeModal: () => set({isOpen: false, movie: undefined}),
 }));
 
 export default useInfoModal
