@@ -24,7 +24,7 @@ const Billboard = () =>{
 
             autoPlay
             loop
-            muted
+            // muted
             poster={movie?.thumbnailUrl} 
             src={movie?.trailerUrl}>
 

@@ -98,7 +98,7 @@ export default function Home() {
         {shuffledLists.map(({title, data}) => (
           <MovieList key={title} title={title} data={data} />
         ))}
-        <MovieSlider movies={myList!} />
+        {/* <MovieSlider movies={myList!} /> */}
       </div>
     </>
   );
