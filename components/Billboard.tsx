@@ -1,16 +1,35 @@
 import useBillboard from "@/hooks/useBillboard";
 import PlayButton from "./PlayButton";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import useInfoModal from "@/hooks/useInfoModal";
 import FavoriteButton from "./FavoriteButton";
+
+const TOP_OFFSET = 600;
 
 const Billboard = () =>{
     const { movie } = useBillboard();
     const {openModal} = useInfoModal();
-    
+    const [muted, setMuted] = useState(false);
+
     const handleOPenModal = useCallback(()=>{
         openModal(movie);
     }, [openModal, movie]);
+
+    useEffect(() =>{
+        const handleScroll = () =>{
+            if(window.scrollY >= TOP_OFFSET){
+                setMuted(true);
+            }else{
+                setMuted(false);
+            }
+        }
+        window.addEventListener("scroll", handleScroll);
+
+        return () =>{
+            window.removeEventListener("scroll", handleScroll);
+        }
+    }, [])
+
     return (
         <div className="relative h-[56.25vw]">
             <video 
@@ -24,7 +43,7 @@ const Billboard = () =>{
 
             autoPlay
             loop
-            // muted
+            muted={muted}
             poster={movie?.thumbnailUrl} 
             src={movie?.trailerUrl}>
 

@@ -44,6 +44,7 @@ export default async function handler(
           }
         }
       ));
+      console.log(data);
       response.status(200).send(data);
     } else {
       return response.status(405).end();
