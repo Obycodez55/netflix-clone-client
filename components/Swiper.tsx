@@ -24,7 +24,7 @@ const MovieSlider = ({movies}: {movies: Movie[]}) => {
           className='!overflow-visible !z-0 !relative'
     >
       {movies?.map((movie, index) => (
-        <SwiperSlide key={movie.id} virtualIndex={index} className=''>
+        <SwiperSlide key={movie.id} virtualIndex={index} className='!-z-1 !relative'>
           <MovieCard key={movie?.id} movie={movie}/>
         </SwiperSlide>
       ))}
