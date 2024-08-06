@@ -39,7 +39,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       <div
         className="
             opacity-0
-            relative
+            absolute
             top-0
             transition
             duration-200
@@ -76,7 +76,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
             bg-zinc-800
             p-2
             lg:p-4
-            relative
+            absolute
             w-full
             transition
             shadow-md

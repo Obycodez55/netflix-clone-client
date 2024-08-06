@@ -1,4 +1,3 @@
-import axios from "axios";
 import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
@@ -16,6 +15,7 @@ import ContinueWatching from "@/components/ContinueWatching";
 import { IMovieList } from "..";
 import { Modal } from "@/components/Modal";
 import Search from "@/components/Search";
+import MovieSlider from "@/components/Swiper";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req as IncomingMessage;
@@ -92,12 +92,13 @@ export default function Home() {
     <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar router={router}/>
       <Billboard />
-      <div className="max-md:mt-8">
+      <div className="max-md:mt-8 pb-96">
         <MovieList key="favourites" title="My List" data={myList!} ordered/>
         <ContinueWatching data={continueWatching!} />
         {shuffledLists.map(({title, data}) => (
           <MovieList key={title} title={title} data={data} />
         ))}
+        <MovieSlider movies={myList!} />
       </div>
     </>
   );
