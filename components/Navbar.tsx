@@ -74,12 +74,12 @@ const Navbar = ({router} : {router: NextRouter}) => {
                 lg:flex
             "
             >
-                <NavbarItem  label="Home"/>
-                <NavbarItem  label="TV Shows"/>
-                <NavbarItem  label="Movies"/>
-                <NavbarItem  label="New & Popular"/>
-                <NavbarItem  label="My List"/>
-                <NavbarItem  label="Browse by Languages"/>
+                <NavbarItem  label="Home" href="/" as="/"/>
+                <NavbarItem  label="TV Shows" href="/?series=%%" as="/tvshows"/>
+                <NavbarItem  label="Movies" href="/?movies=%%" as="movies"/>
+                <NavbarItem  label="New & Popular" href="/?popular=%%" as="/new"/>
+                <NavbarItem  label="My List" href="/?movies=%%" as="/mylist"/>
+                <NavbarItem  label="Browse by Languages" href="/" as="/browse"/>
             </div>
             <div onClick={toggleMobileMenu} onMouseEnter={()=>setMobileMenuVisible(true)} onMouseLeave={() =>setMobileMenuVisible(false)} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
                 <p className="text-white text-sm">Browse</p>

@@ -98,7 +98,7 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
             {movie?.duration}
           </p>
           <p className="text-white md:text-lg font-semibold">
-          {movie.genre.map(genre=> (
+          {movie?.genre.map(genre=> (
                 <span key={genre} className="mr-1">{genre}</span>
               ))}
           </p>

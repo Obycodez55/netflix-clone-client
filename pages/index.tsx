@@ -67,20 +67,39 @@ export function getMovieTitles (data: IMovieList[]) {
   return titles;
 }
 
+interface Query {
+  search?: string
+  series: string
+  movies: string
+  popular: string
+}
+
 export default function Home() {
   const { lists } = useMovieList();
   const router = useRouter();
-  const text = router.query.search as string;
+  const {search, series, movies, popular} = router.query as unknown as Query;
   const profileContext = useProfile();
   if (!profileContext) router.push("/profiles");
   const favourites = profileContext?.profile?.favourites;
-  const myList = favourites?.map(fav => fav.movie);
-  const continueWatching = profileContext?.profile?.ContinueWatching;
+  let myList = favourites?.map(fav => fav.movie);
+  let continueWatching = profileContext?.profile?.ContinueWatching;
   const updateProfile = profileContext?.updateProfile;
   const {isOpen, closeModal} = useInfoModal();
   const [shuffledLists, setShuffledLists] = useState<IMovieList[]>([]);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   
+  let billboardType : undefined | "series" | "movies";
+  if (series){
+    billboardType = "series";
+    continueWatching = continueWatching?.filter(item => item.movie.isSeries == true);
+    myList = myList?.filter(movie => movie.isSeries == true);
+  }
+  if (movies){
+    billboardType = "movies"
+    continueWatching = continueWatching?.filter(item => item.movie.isSeries == false);
+    myList = myList?.filter(movie => movie.isSeries == false);
+  } 
+
   useEffect(() => {
     updateProfile!();
 }, []);
@@ -91,14 +110,14 @@ export default function Home() {
 
   return (
     <>
-    {text && (
+    {search && (
       <Modal onClose={()=> router.push("/")}>
-      <Search text={text} placeholders={getMovieTitles(lists)} router={router} setSearchOpen={setSearchOpen}/>
+      <Search text={search} placeholders={getMovieTitles(lists)} router={router} setSearchOpen={setSearchOpen}/>
     </Modal>
     )}
     <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar router={router}/>
-      <Billboard searchOpen={searchOpen}/>
+      <Billboard searchOpen={searchOpen} type={billboardType}/>
       <div className="max-md:mt-8 pb-20">
         <MovieList key="favourites" title="My List" data={myList!} ordered/>
         <ContinueWatching data={continueWatching!} />

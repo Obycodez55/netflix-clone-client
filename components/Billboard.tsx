@@ -3,11 +3,12 @@ import PlayButton from "./PlayButton";
 import { useCallback, useState, useEffect } from "react";
 import useInfoModal from "@/hooks/useInfoModal";
 import FavoriteButton from "./FavoriteButton";
+import { Movie } from "..";
 
 const TOP_OFFSET = 300;
 
-const Billboard = ({searchOpen}: {searchOpen: boolean}) =>{
-    const { movie } = useBillboard();
+const Billboard = ({searchOpen, type}: {searchOpen: boolean, type?: "series" | "movies"}) =>{
+    const { movie, refetch } = useBillboard(type);
     const {openModal, isOpen} = useInfoModal();
     const [muted, setMuted] = useState<boolean>(false);
 
@@ -15,6 +16,10 @@ const Billboard = ({searchOpen}: {searchOpen: boolean}) =>{
         // setMuted(true);
         openModal(movie);
     }, [openModal, movie]);
+
+    useEffect(() => {
+        refetch(); // Trigger the API request whenever the type changes
+    }, [type]);
 
     useEffect(() =>{
         if (isOpen){
