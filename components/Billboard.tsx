@@ -8,15 +8,18 @@ const TOP_OFFSET = 300;
 
 const Billboard = ({searchOpen}: {searchOpen: boolean}) =>{
     const { movie } = useBillboard();
-    const {openModal} = useInfoModal();
+    const {openModal, isOpen} = useInfoModal();
     const [muted, setMuted] = useState<boolean>(false);
 
     const handleOPenModal = useCallback(()=>{
-        setMuted(true);
+        // setMuted(true);
         openModal(movie);
     }, [openModal, movie]);
 
     useEffect(() =>{
+        if (isOpen){
+            return setMuted(true);
+        }
         const handleScroll = () =>{
             if(window.scrollY >= TOP_OFFSET){
                 setMuted(true);
@@ -35,7 +38,7 @@ const Billboard = ({searchOpen}: {searchOpen: boolean}) =>{
         return () =>{
             window.removeEventListener("scroll", handleScroll);
         }
-    }, [searchOpen])
+    }, [searchOpen, isOpen])
 
     return (
         <div className="relative h-[56.25vw]">

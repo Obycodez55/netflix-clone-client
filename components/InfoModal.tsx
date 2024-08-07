@@ -46,9 +46,11 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
     ">
       <div 
     className="
-     relative flex items-center justify-center w-auto
+     relative flex items-center justify-center
       mx-auto
+      w-[90%]
       max-w-3xl
+      min-w-[300px]
       rounded-md
       overflow-hidden
     ">
@@ -61,7 +63,7 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
         bg-zinc-900
         drop-shadow-red
         `}>
-          <div className="relative h-96">
+          <div className="relative max-h-96 ">
           <video 
           className="
             w-full
@@ -88,19 +90,19 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
           </div>
         </div>
       </div>
-      <div className="px-12 py-8">
+      <div className="md:px-12 md:py-8 p-4">
           <p className="text-green-400 font-semibold text-lg">
             New
           </p>
-          <p className="text-white text-lg">
+          <p className="text-white md:text-lg">
             {movie?.duration}
           </p>
-          <p className="text-white text-lg font-semibold">
+          <p className="text-white md:text-lg font-semibold">
           {movie.genre.map(genre=> (
                 <span key={genre} className="mr-1">{genre}</span>
               ))}
           </p>
-          <p className="text-white text-lg">
+          <p className="text-white md:text-lg">
             {movie?.description}
           </p>
       </div>
