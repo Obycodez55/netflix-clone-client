@@ -4,7 +4,6 @@ import useSWR from "swr"
 import { Movie } from "..";
 
 const useBillboard = (type? : string) => {
-    console.log(type)
     let url = `api/billboard`
     if (type) url = `api/billboard?type=${type}`;
     const { data, error, isLoading, mutate } = useSWR(url, fetcher, {
@@ -16,7 +15,6 @@ const useBillboard = (type? : string) => {
         mutate(url);
     };
     const movie = data as Movie;
-    console.log(movie)
     return {
         movie,
         error,
