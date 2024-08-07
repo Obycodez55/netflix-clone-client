@@ -11,7 +11,7 @@ import { NextRouter } from "next/router";
 
 const TOP_OFFSET = 66;
 
-const Navbar = ({router} : {router: NextRouter}) => {
+const Navbar = ({router, endpoint = "/"} : {router: NextRouter, endpoint?: string}) => {
     const {user} = useCurrentUser();
     const profiles = user?.profiles;
     const currentProfile = useProfile()?.profile;
@@ -78,7 +78,7 @@ const Navbar = ({router} : {router: NextRouter}) => {
                 <NavbarItem  label="TV Shows" href="/?series=%%" as="/tvshows"/>
                 <NavbarItem  label="Movies" href="/?movies=%%" as="movies"/>
                 <NavbarItem  label="New & Popular" href="/?popular=%%" as="/new"/>
-                <NavbarItem  label="My List" href="/?movies=%%" as="/mylist"/>
+                <NavbarItem  label="My List" href="/mylist=" as="/mylist"/>
                 <NavbarItem  label="Browse by Languages" href="/" as="/browse"/>
             </div>
             <div onClick={toggleMobileMenu} onMouseEnter={()=>setMobileMenuVisible(true)} onMouseLeave={() =>setMobileMenuVisible(false)} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
@@ -91,7 +91,7 @@ const Navbar = ({router} : {router: NextRouter}) => {
             </div>
                 <div className="flex flex-row ml-auto gap-7 items-center">
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
-                    <IoSearch className="h-6 w-6" onClick={() => router.push("/?search=%%", "/?search")}/>
+                    <IoSearch className="h-6 w-6" onClick={() => router.push(`${endpoint}?search=%%`, `${endpoint}?search`)}/>
                     </div>
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
                     <FaRegBell className="h-5 w-5"/>

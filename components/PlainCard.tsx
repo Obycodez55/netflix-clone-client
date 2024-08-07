@@ -8,7 +8,7 @@ interface SearchCardProps {
   movie: Movie;
 }
 
-const SearchCard: React.FC<SearchCardProps> = ({
+const PlainCard: React.FC<SearchCardProps> = ({
   movie
 }) => {
   const { openModal } = useInfoModal();
@@ -33,4 +33,4 @@ const SearchCard: React.FC<SearchCardProps> = ({
   );
 };
 
-export default SearchCard;
+export default PlainCard;

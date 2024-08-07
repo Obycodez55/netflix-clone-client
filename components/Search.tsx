@@ -3,39 +3,40 @@ import { PlaceholdersAndVanishInput } from "./SearchInput";
 import { NextRouter } from "next/router";
 import axios from "axios";
 import { Movie } from "..";
-import SearchData from "./SearchData";
+import PlainData from "./PlainData";
 import { FaArrowLeft } from "react-icons/fa6";
 
 type Props = {
   text: string;
   placeholders: string[];
   router: NextRouter;
-  setSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  endpoint?: string
 };
 
-const Search = ({ text, placeholders, router, setSearchOpen }: Props) => {
+const Search = ({ text, placeholders, router, setSearchOpen, endpoint="/" }: Props) => {
   const [value, setValue] = React.useState("");
   const [data, setData] = React.useState<Movie[]>([]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
     if (value == "") {
-      router.push("/?search=%%", "/?search");
+      router.push(`${endpoint}?search=%%`, `${endpoint}?search`);
     } else {
-      router.push("/?search=" + value);
+      router.push(`${endpoint}?search=${value}`);
     }
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push("/?search=" + value);
+    router.push(`${endpoint}?search=` + value);
   };
 
 
 useEffect(()=>{
-  setSearchOpen(true);
+  setSearchOpen && setSearchOpen(true);
 
   return () => {
-    setSearchOpen(false);
+    setSearchOpen && setSearchOpen(false);
   };
 })
 
@@ -54,7 +55,7 @@ useEffect(()=>{
     <div className="p-5">
       <div className="max-md:flex gap-5 items-center">
       <div className="md:absolute cursor-pointer md:z-30">
-      <FaArrowLeft onClick={() => router.push("/")} className="text-white w-10 h-8"/>
+      <FaArrowLeft onClick={() => router.push(endpoint)} className="text-white w-10 h-8"/>
       </div>
       <div className="relative">
         <PlaceholdersAndVanishInput
@@ -65,7 +66,7 @@ useEffect(()=>{
       </div>
       </div>
       <div>
-        <SearchData data={data} />
+        <PlainData data={data} />
     </div>
     </div>
   );
