@@ -2,23 +2,37 @@ import React, { useCallback } from "react";
 import { useProfile } from "@/contexts/ProfileContext";
 import { AiOutlineCheck, AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
+import { Movie, ProfileA } from "..";
 
 type FavoriteButtonProps = {
-  movieId: string;
+  movie: Movie;
 };
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
-  const { profile, updateProfile } = useProfile()!;
-  const isFavourite = profile?.favouriteIds?.includes(movieId);
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movie }) => {
+  const profileContext = useProfile()!;
+  const profile = profileContext.profile as ProfileA;
+  const updateProfile = profileContext.updateProfile;
+  
+  const favourites = profile?.favourites;
+  const favouriteIds = profile?.favouriteIds;
+  const isFavourite = favouriteIds?.includes(movie?.id);
 
   const toggleFavourite = useCallback(async () => {
     if (isFavourite) {
-      await axios.delete("api/favourites", { data: { movieId } });
+      // Remove movie from favorite and favoriteId of profile
+      const updatedFavourites = favourites?.filter((fav) => fav.movieId !== movie.id);
+      const updatedFavouriteIds = favouriteIds?.filter((id) => id !== movie.id);
+      updateProfile({ ...profile, favourites: updatedFavourites, favouriteIds: updatedFavouriteIds });
+      axios.delete("api/favourites", { data: { movieId:movie.id } });
     } else {
-      await axios.post("api/favourites", { movieId });
+      // Add movie to favorite and favoriteId of profile
+      const updatedFavourites = [...(favourites || []), { movieId: movie.id, movie }];
+      const updatedFavouriteIds = [...(favouriteIds || []), movie.id];
+      updateProfile({ ...profile, favourites: updatedFavourites, favouriteIds: updatedFavouriteIds });
+      await axios.post("api/favourites", { movieId: movie.id });
+      updateProfile();
     }
-    updateProfile();
-  }, [updateProfile, isFavourite, movieId]);
+  }, [isFavourite, updateProfile, favourites, favouriteIds, profile, movie]);
 
   const Icon = isFavourite ? AiOutlineCheck : AiOutlinePlus;
   return (

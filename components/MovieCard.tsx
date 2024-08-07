@@ -94,7 +94,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
                 className="text-black"
               />
             </div>
-            <FavoriteButton movieId={movie.id} />
+            <FavoriteButton movie={movie} />
             <div className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
               <BiChevronDown
                 onClick={() => openModal(movie)}

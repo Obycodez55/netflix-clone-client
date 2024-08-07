@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { createContext, use, useContext, useState } from "react";
 import { ProfileA } from "..";
 
-const ProfileContext = createContext<{ profile: ProfileA | undefined; updateProfile: () => Promise<void>; } | null>(null);
+const ProfileContext = createContext<{ profile: ProfileA | undefined; updateProfile: (profile?: ProfileA) => Promise<void>; } | null>(null);
 
 export const useProfile = () => useContext(ProfileContext);
 
@@ -13,7 +13,12 @@ export const ProfileProvider = ({ children }: {
   // const { profile: currentProfile } = useCurrentProfile();
   const [profile, setProfile] = useState<ProfileA>();
 
-  const updateProfile = async () => {
+  const updateProfile = async (profile?: ProfileA) => {
+    if (profile) {
+      // You might want to update the profile using an API call
+      setProfile(profile);
+      return;
+    }
     // You might want to update the profile using an API call
     const { data } = await axios.get("/api/currentProfile");
     // For now, just setting the profile ID

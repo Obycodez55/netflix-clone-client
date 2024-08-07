@@ -9,10 +9,10 @@ interface ContinueWatching {
 }
 
 export interface Favourite {
-    id: string
-    profileId: string
+    id?: string
+    profileId?: string
     movieId: string
-    createdAt: Date
+    createdAt?: Date
     movie: Movie
 }
 export interface ProfileA {
