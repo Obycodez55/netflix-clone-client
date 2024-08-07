@@ -19,7 +19,6 @@ const Billboard = ({searchOpen, type}: {searchOpen: boolean, type?: "series" | "
 
     useEffect(() => {
         refetch(); // Trigger the API request whenever the type changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type]);
 
     useEffect(() =>{
@@ -47,7 +46,7 @@ const Billboard = ({searchOpen, type}: {searchOpen: boolean, type?: "series" | "
     }, [searchOpen, isOpen])
 
     return (
-        <div className="relative h-[56.25vw]">
+        <div className="relative h-[70vw] md:h-[56.25vw]">
             <video 
             className="
                 w-full
