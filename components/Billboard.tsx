@@ -4,14 +4,15 @@ import { useCallback, useState, useEffect } from "react";
 import useInfoModal from "@/hooks/useInfoModal";
 import FavoriteButton from "./FavoriteButton";
 
-const TOP_OFFSET = 600;
+const TOP_OFFSET = 300;
 
-const Billboard = () =>{
+const Billboard = ({searchOpen}: {searchOpen: boolean}) =>{
     const { movie } = useBillboard();
     const {openModal} = useInfoModal();
-    const [muted, setMuted] = useState(false);
+    const [muted, setMuted] = useState<boolean>(false);
 
     const handleOPenModal = useCallback(()=>{
+        setMuted(true);
         openModal(movie);
     }, [openModal, movie]);
 
@@ -23,12 +24,18 @@ const Billboard = () =>{
                 setMuted(false);
             }
         }
-        window.addEventListener("scroll", handleScroll);
+            if (searchOpen){
+                setMuted(true);
+            } else{
+                setMuted(false);
+                window.addEventListener("scroll", handleScroll);
+            }
+            
 
         return () =>{
             window.removeEventListener("scroll", handleScroll);
         }
-    }, [])
+    }, [searchOpen])
 
     return (
         <div className="relative h-[56.25vw]">

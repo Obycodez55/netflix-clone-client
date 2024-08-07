@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { parse } from "cookie";
 import { IncomingMessage } from "http";
 import { NextPageContext } from "next";
@@ -8,7 +9,7 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { useRouter } from "next/router";
 import MovieList from "@/components/MovieList";
 import useMovieList from "@/hooks/useMovieList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import InfoModal from "@/components/InfoModal";
 import useInfoModal from "@/hooks/useInfoModal";
 import ContinueWatching from "@/components/ContinueWatching";
@@ -76,23 +77,29 @@ export default function Home() {
   const myList = favourites?.map(fav => fav.movie);
   const continueWatching = profileContext?.profile?.ContinueWatching;
   const updateProfile = profileContext?.updateProfile;
-  const shuffledLists = lists ? shuffleArray<IMovieList>(lists) : [];
   const {isOpen, closeModal} = useInfoModal();
+  const [shuffledLists, setShuffledLists] = useState<IMovieList[]>([]);
+  const [searchOpen, setSearchOpen] = useState<boolean>(false);
   
   useEffect(() => {
     updateProfile!();
-  }, []);
+}, []);
+
+  useEffect(() => {
+    setShuffledLists(lists ? shuffleArray<IMovieList>(lists) : []); 
+}, [lists]);
+
   return (
     <>
     {text && (
       <Modal onClose={()=> router.push("/")}>
-      <Search text={text} placeholders={getMovieTitles(lists)} router={router}/>
+      <Search text={text} placeholders={getMovieTitles(lists)} router={router} setSearchOpen={setSearchOpen}/>
     </Modal>
     )}
     <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar router={router}/>
-      <Billboard />
-      <div className="max-md:mt-8 pb-96">
+      <Billboard searchOpen={searchOpen}/>
+      <div className="max-md:mt-8 pb-20">
         <MovieList key="favourites" title="My List" data={myList!} ordered/>
         <ContinueWatching data={continueWatching!} />
         {shuffledLists.map(({title, data}) => (

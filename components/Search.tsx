@@ -10,13 +10,13 @@ type Props = {
   text: string;
   placeholders: string[];
   router: NextRouter;
+  setSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Search = ({ text, placeholders, router }: Props) => {
+const Search = ({ text, placeholders, router, setSearchOpen }: Props) => {
   const [value, setValue] = React.useState("");
   const [data, setData] = React.useState<Movie[]>([]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
     const value = e.target.value;
     setValue(value);
     if (value == "") {
@@ -29,6 +29,15 @@ const Search = ({ text, placeholders, router }: Props) => {
     e.preventDefault();
     router.push("/?search=" + value);
   };
+
+
+useEffect(()=>{
+  setSearchOpen(true);
+
+  return () => {
+    setSearchOpen(false);
+  };
+})
 
   useEffect(
     () => {
