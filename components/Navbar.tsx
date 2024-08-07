@@ -99,6 +99,7 @@ const Navbar = ({router, endpoint = "/", favorite} : {router: NextRouter, endpoi
                     </div>
                     <div onClick={toggleAccountMenu} onMouseEnter={()=>setAccountMenuVisible(true)} onMouseLeave={() =>setAccountMenuVisible(false)} className="flex flex-row items-center gap-2 cursor-pointer relative">
                     <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-md overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={`/images/profiles/${currentProfile?.profilePic}.png`} alt={currentProfile?.name}/>
                     </div>
                         <MdArrowDropDown className={`text-white transition w-6 h-6 ${accountMenuVisible? 'rotate-180' : "rotate-0"}`}/>

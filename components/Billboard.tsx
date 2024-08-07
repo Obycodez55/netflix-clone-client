@@ -19,6 +19,7 @@ const Billboard = ({searchOpen, type}: {searchOpen: boolean, type?: "series" | "
 
     useEffect(() => {
         refetch(); // Trigger the API request whenever the type changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type]);
 
     useEffect(() =>{
