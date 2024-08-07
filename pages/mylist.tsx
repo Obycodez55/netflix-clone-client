@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Navbar from '@/components/Navbar'
-import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react'
 import { useProfile } from '@/contexts/ProfileContext';
 import { useRouter } from 'next/router';
@@ -35,8 +34,10 @@ const MyList = () => {
     </Modal>
     )}
     <InfoModal visible={isOpen} onClose={closeModal}/>
-        <Navbar router={router} endpoint="/mylist"/>
+        <Navbar router={router} endpoint="/mylist" favorite/>
+        <div className="px-5 py-24">
         <PlainData data={myList!} emptyText='You have not added any movie to your list'/>
+        </div>
     </div>
   )
 }

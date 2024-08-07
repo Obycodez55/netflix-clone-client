@@ -11,7 +11,7 @@ import { NextRouter } from "next/router";
 
 const TOP_OFFSET = 66;
 
-const Navbar = ({router, endpoint = "/"} : {router: NextRouter, endpoint?: string}) => {
+const Navbar = ({router, endpoint = "/", favorite} : {router: NextRouter, endpoint?: string, favorite?: boolean}) => {
     const {user} = useCurrentUser();
     const profiles = user?.profiles;
     const currentProfile = useProfile()?.profile;
@@ -59,6 +59,7 @@ const Navbar = ({router, endpoint = "/"} : {router: NextRouter, endpoint?: strin
                     items-center
                     transition
                     duration-500
+                    ${favorite? 'bg-zinc-900 bg-opacity-90' : ''}
                     ${showBackgound? 'bg-zinc-900 bg-opacity-90' : ''}
             `}
             >

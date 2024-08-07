@@ -13,7 +13,7 @@ const PlainCard: React.FC<SearchCardProps> = ({
 }) => {
   const { openModal } = useInfoModal();
   return (
-    <div className=" bg-zinc-900 col-span relative h-[12vw]">
+    <div className=" bg-zinc-900 col-span relative h-[15vw] md:h-[12vw]">
       <img
         onClick={() => openModal(movie)}
         className="
@@ -24,7 +24,7 @@ const PlainCard: React.FC<SearchCardProps> = ({
             shadow-xl
             rounded-md
             w-full
-            h-[12vw]
+            h-full
         "
         src={movie.thumbnailUrl}
         alt={movie.title}

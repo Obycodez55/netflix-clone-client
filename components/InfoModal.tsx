@@ -63,7 +63,7 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
         bg-zinc-900
         drop-shadow-red
         `}>
-          <div className="relative max-h-96 ">
+          <div className="relative max-h-96 overflow-hidden">
           <video 
           className="
             w-full
@@ -72,7 +72,6 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
             object-cover
           "
           autoPlay
-          muted
           loop
           src={movie?.trailerUrl} 
           poster={movie?.thumbnailUrl}>
