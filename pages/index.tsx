@@ -17,6 +17,7 @@ import { IMovieList } from "..";
 import { Modal } from "@/components/Modal";
 import Search from "@/components/Search";
 import MovieSlider from "@/components/Swiper";
+import Footer from "@/components/Footer";
 
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req as IncomingMessage;
@@ -118,7 +119,7 @@ export default function Home() {
     <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar router={router}/>
       <Billboard searchOpen={searchOpen} type={billboardType}/>
-      <div className="max-md:mt-8 pb-20">
+      <div className="max-md:mt-8 pb-5">
         <MovieList key="favourites" title="My List" data={myList!} ordered/>
         <ContinueWatching data={continueWatching!} />
         {shuffledLists.map(({title, data}) => (
@@ -126,6 +127,7 @@ export default function Home() {
         ))}
         {/* <MovieSlider movies={myList!} /> */}
       </div>
+      <Footer/>
     </>
   );
 }
