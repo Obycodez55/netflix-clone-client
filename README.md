@@ -27,7 +27,7 @@ To set up the project locally:
 
 ```bash
 # Clone the frontend repository
-git clone https://github.com/your-username/netflix-clone-frontend.git
+git clone https://github.com/obycodez55/netflix-clone-client.git
 
 # Navigate to the project directory
 cd netflix-clone-frontend
@@ -37,3 +37,15 @@ npm install
 
 # Start the development server
 npm run dev
+```
+After starting the development server, open your browser and go to http://localhost:3000 to view the application.
+
+## **Live Demo**
+Check out the live version of the frontend hosted on Vercel: [Netflix Clone on Vercel](https://obycodez55flix.vercel.app)
+
+## **Contributing**
+If you'd like to contribute, feel free to fork the repository and submit a pull request with your changes.
+
+## **Contact**
+For any questions or feedback, you can reach me on [LinkedIn](https://linkedin.com/in/your-profile) or [Twitter](https://twitter.com/your-handle).
+
