@@ -47,5 +47,5 @@ Check out the live version of the frontend hosted on Vercel: [Netflix Clone on V
 If you'd like to contribute, feel free to fork the repository and submit a pull request with your changes.
 
 ## **Contact**
-For any questions or feedback, you can reach me on [LinkedIn](https://linkedin.com/in/your-profile) or [Twitter](https://twitter.com/your-handle).
+For any questions or feedback, you can reach me on [LinkedIn](https://www.linkedin.com/in/adebayo-obikoya-557b0626a/) or [Twitter](https://x.com/obikoya_adebayo).
 
