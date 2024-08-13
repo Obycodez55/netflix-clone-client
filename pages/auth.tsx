@@ -40,6 +40,11 @@ const Auth = () => {
         }
     }, [email, username, password, variant, router])
     
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        auth();
+      };
+
     return(
         
         <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-cover">
@@ -55,7 +60,7 @@ const Auth = () => {
             <h2 className="text-white text-4xl mb-8 font-semibold">
                 {variant === "login"? "Sign in" : "Register"}
             </h2>
-            <form action="" onSubmit={auth}>
+            <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4">
                 {variant === "register" &&(
             <Input
@@ -81,7 +86,7 @@ const Auth = () => {
             value={password}
             />
             </div>
-            <button onClick={auth} type="submit" onSubmit={auth} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+            <button onClick={auth} type="submit" className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
                 {buttonText}
             </button>
             </form>
