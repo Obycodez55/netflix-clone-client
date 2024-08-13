@@ -15,6 +15,7 @@ const Auth = () => {
     const [variant, setVariant] = useState("login");
 
     const toggleVariant = useCallback(()=>{
+        setErrorMessage("");
         setVariant((currentVariant)=> currentVariant=== "login"? "register" : "login");
         setButtontext(variant === "login"? "Register" : "Sign in");
     }, [variant])
@@ -54,6 +55,7 @@ const Auth = () => {
             <h2 className="text-white text-4xl mb-8 font-semibold">
                 {variant === "login"? "Sign in" : "Register"}
             </h2>
+            <form action="" onSubmit={auth}>
             <div className="flex flex-col gap-4">
                 {variant === "register" &&(
             <Input
@@ -79,9 +81,10 @@ const Auth = () => {
             value={password}
             />
             </div>
-            <button onClick={auth} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+            <button onClick={auth} type="submit" onSubmit={auth} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
                 {buttonText}
             </button>
+            </form>
             {errorMessage && (
             <p className="text-red-600 mt-4 justify-center">
                 {errorMessage}
