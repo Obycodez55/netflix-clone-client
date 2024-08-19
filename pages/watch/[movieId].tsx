@@ -35,10 +35,7 @@ const Watch = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [ended, setEnded] = useState(false);
 
-  const handleFullscreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else if (videoRef.current) {
+  const setFullScreen = () => {if (videoRef.current) {
       const current = videoRef.current as any;
       if (current.requestFullscreen) {
         current.requestFullscreen();
@@ -58,7 +55,6 @@ const Watch = () => {
   const updateTime = useCallback(async () => {
     const videoElement = videoRef.current;
     if (videoElement) {
-      console.log("updated");
       await axios.put("/api/continueWatching", {
         movieId,
         timestamp: videoElement.currentTime
@@ -69,25 +65,14 @@ const Watch = () => {
   const removeFromList = useCallback(async () => {
     const videoElement = videoRef.current;
     if (videoElement) {
-      console.log("deleted");
       await axios.delete("/api/continueWatching", { data: { movieId } });
     }
   }, [videoRef, movieId]);
 
   // TODO: TimeStamp Request
-  useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      if (event.key === "f" || event.key === "F") {
-        handleFullscreen();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  // useEffect(() => {
+  //   setFullScreen();
+  // }, []);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -106,15 +91,14 @@ const Watch = () => {
     };
     const handleEnded = () => {
       // Set ended to true
-      console.log("ended");
       setEnded(true);
       removeFromList();
-      console.log({ ended });
     };
     const handlePlaying = () => {
       setEnded(false);
     }
     if (videoElement) {
+      videoElement.addEventListener("play", setFullScreen);
       videoElement.addEventListener("timeupdate", handleTimeUpdate);
       videoElement.addEventListener("ended", handleEnded);
       videoElement.addEventListener("playing", handlePlaying);
@@ -125,6 +109,8 @@ const Watch = () => {
       if (videoElement) {
         videoElement.removeEventListener("timeupdate", handleTimeUpdate);
         videoElement.removeEventListener("ended", handleEnded);
+        videoElement.removeEventListener("playing", handlePlaying);
+        videoElement.removeEventListener("play", setFullScreen);
       }
     };
   }, [currentTime, movieId]);
@@ -134,7 +120,6 @@ const Watch = () => {
       if (!ended) {
         updateTime();
       } else {
-        console.log("cleared");
         removeFromList();
       }
     }, 10000);
@@ -170,8 +155,9 @@ const Watch = () => {
       </nav>
       <video
         ref={videoRef}
-        autoPlay
+        // autoPlay
         controls
+        controlsList="nodownload nofullscreen noremoteplayback"
         className="h-full w-full"
         src={movie?.videoUrl}
       ></video>
